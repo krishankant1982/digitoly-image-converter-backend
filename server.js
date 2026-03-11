@@ -1,31 +1,22 @@
-import express from "express"
-import cors from "cors"
+import express from "express";
+import cors from "cors";
 
-import {CONFIG} from "./config.js"
+const app = express();
 
-import authRoutes from "./auth.js"
-import aiRoutes from "./ai.js"
-import paymentRoutes from "./payment.js"
-import storageRoutes from "./storage.js"
+app.use(cors());
+app.use(express.json());
 
-const app = express()
+app.get("/", (req, res) => {
+  res.send("Digitoly Image Converter API running");
+});
 
-app.use(cors())
-app.use(express.json())
+app.get("/health", (req, res) => {
+  res.json({ status: "ok" });
+});
 
-app.use("/auth",authRoutes)
-app.use("/ai",aiRoutes)
-app.use("/payment",paymentRoutes)
-app.use("/storage",storageRoutes)
+/* IMPORTANT: Render requires this */
+const PORT = process.env.PORT || 3000;
 
-app.get("/",(req,res)=>{
-
-res.send("AI Image Converter API Running")
-
-})
-
-app.listen(CONFIG.PORT,()=>{
-
-console.log("Server running on port "+CONFIG.PORT)
-
-})
+app.listen(PORT, () => {
+  console.log("Server running on port " + PORT);
+});
