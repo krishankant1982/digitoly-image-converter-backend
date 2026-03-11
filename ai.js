@@ -1,3 +1,16 @@
+const { removeBackground } = require("@imgly/background-removal-node")
+const fs = require("fs")
+
+async function removeBG(input, output) {
+
+const blob = await removeBackground(input)
+
+fs.writeFileSync(output, blob)
+
+}
+
+module.exports = { removeBG }
+
 import express from "express"
 import axios from "axios"
 import FormData from "form-data"
@@ -95,3 +108,4 @@ module.exports = { upscale }
 
 
 export default router
+
