@@ -69,9 +69,29 @@ return res.status(500).send(err)
 }
 
 res.send(svg)
+const { spawn } = require("child_process")
+
+function upscale(input,output,scale){
+
+return new Promise((resolve,reject)=>{
+
+const process = spawn("python",[
+"esrgan.py",
+input,
+output,
+scale
+])
+
+process.on("close",resolve)
 
 })
 
+}
+
+module.exports = { upscale }
 })
+
+})
+
 
 export default router
