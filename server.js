@@ -164,6 +164,26 @@ app.post("/verify-payment", (req, res) => {
 
 });
 
+const archiver = require("archiver")
+
+app.post("/zip", async (req,res)=>{
+
+const files = req.body.files
+
+const archive = archiver("zip")
+
+res.attachment("digitoly-images.zip")
+
+archive.pipe(res)
+
+files.forEach(file=>{
+archive.file("uploads/"+file,{name:file})
+})
+
+archive.finalize()
+
+})
+
 /* ---------------- START SERVER ---------------- */
 
 const PORT = process.env.PORT || 3000;
@@ -171,3 +191,4 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, "0.0.0.0", () => {
   console.log("Digitoly API running on port " + PORT);
 });
+
